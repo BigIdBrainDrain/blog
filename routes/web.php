@@ -11,10 +11,37 @@
 |
 */
 
-Route::get('/', function () {
+Route::get('/', function () {//ruta anonima
     return view('welcome');
 });
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('/saludar', 
+function(){
+    //var_dump('hola');
+    //dd('suma');// incluye exit(0)
+    return "prueba de view";
+});
+
+Route::get('/sumar/{operador1}/{operador2}', // {operador1}-{operador2} {operador1}/{operador2} {operador1}_{operador2}
+function($operador1,$operador2){
+    return $operador1 + $operador2;
+});
+
+Route::get('/sumar-opcional/{operador1}/{operador2?}', 
+function($operador1,$operador2=0){
+    return $operador1 + $operador2;
+});
+
+Route::get('/array/{numero}', 
+function($numero){
+    $array=[];
+    for ($i=0; $i < $numero; $i++) { 
+        $array[]=uniqid();
+    }
+    return response()->json($array);
+})->where(['numero'=>'[0-9]+']);// expresiones regulares 
+
